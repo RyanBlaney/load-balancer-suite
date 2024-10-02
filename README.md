@@ -50,40 +50,39 @@ To use the load balancer, you need to define the backend servers and the strateg
 
 **Example (Least Connections)**:
 
-    ```go
+```go
 
-    package main
+package main
 
-    import (
-        "fmt"
-        "go-load-balancer/loadbalancer"
-        "go-load-balancer/loadbalancer/balance-strategy"
-    )
+import (
+    "fmt"
+    "go-load-balancer/loadbalancer"
+    "go-load-balancer/loadbalancer/balance-strategy"
+)
 
-    func main() {
-        // Define backend servers
-        backends := []string{
-            "localhost:8081",
-            "localhost:8082",
-            "localhost:8083",
-            "localhost:8084",
-            "localhost:8085",
-        }
-
-        // Use Least Connections Strategy
-        leastConnectionsStrategy := balancestrategy.NewLeastConnectionsStrategy(backends)
-
-        // Initialize the Load Balancer with the chosen strategy
-        lb := loadbalancer.NewLoadBalancer(backends, leastConnectionsStrategy)
-
-        // Simulate traffic distribution
-        for i := 0; i < len(backends)*2; i++ {
-            backend := lb.GetNextBackend()
-            fmt.Printf("Redirecting to backend: %s\n", backend)
-        }
+func main() {
+    // Define backend servers
+    backends := []string{
+        "localhost:8081",
+        "localhost:8082",
+        "localhost:8083",
+        "localhost:8084",
+        "localhost:8085",
     }
 
-    ```
+    // Use Least Connections Strategy
+    leastConnectionsStrategy := balancestrategy.NewLeastConnectionsStrategy(backends)
+
+    // Initialize the Load Balancer with the chosen strategy
+    lb := loadbalancer.NewLoadBalancer(backends, leastConnectionsStrategy)
+
+    // Simulate traffic distribution
+    for i := 0; i < len(backends)*2; i++ {
+        backend := lb.GetNextBackend()
+        fmt.Printf("Redirecting to backend: %s\n", backend)
+    }
+}
+```
 
 
 #### 2. Adding a New Load Balancing Strategy
